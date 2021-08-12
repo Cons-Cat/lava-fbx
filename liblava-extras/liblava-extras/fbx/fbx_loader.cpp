@@ -12,8 +12,7 @@ auto load_fbx_scene(lava::name filename) -> ofbx::IScene* {
 }
 
 // TODO: Template the type of vertices here.
-auto load_fbx_model_by_index(lava::device_ptr device, lava::name filename,
-                             ofbx::IScene* scene, int index) -> fbx_data {
+auto load_fbx_model_by_index(ofbx::IScene* scene, int index) -> fbx_data {
   lava::extras::fbx_data fbx_data;
   lava::mesh_data mesh_data;
 
