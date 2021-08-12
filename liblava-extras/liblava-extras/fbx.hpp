@@ -1,3 +1,3 @@
 #pragma once
 
-#include <liblava-extras/ofbx/fbx_loader.hpp>
+#include <liblava-extras/fbx/fbx_loader.hpp>

@@ -19,18 +19,18 @@ target_include_directories(lava-extras.core INTERFACE
 set_property(TARGET lava-extras.core PROPERTY EXPORT_NAME core)
 add_library(lava-extras::core ALIAS lava-extras.core)
 
-message(">> lava-extras::ofbx")
+message(">> lava-extras::fbx")
 
-add_library(lava-extras.ofbx STATIC
-        ${LIBLAVA_EXTRAS_DIR}/ofbx/fbx_loader.hpp
-        ${LIBLAVA_EXTRAS_DIR}/ofbx/fbx_loader.cpp
+add_library(lava-extras.fbx STATIC
+        ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_loader.hpp
+        ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_loader.cpp
         )
 
-target_link_libraries(lava-extras.ofbx PUBLIC
+target_link_libraries(lava-extras.fbx PUBLIC
         lava::resource
         lava::block
         lava-extras::core
         )
 
-set_property(TARGET lava-extras.ofbx PROPERTY EXPORT_NAME ofbx)
-add_library(lava-extras::ofbx ALIAS lava-extras.ofbx)
+set_property(TARGET lava-extras.fbx PROPERTY EXPORT_NAME fbx)
+add_library(lava-extras::fbx ALIAS lava-extras.fbx)
