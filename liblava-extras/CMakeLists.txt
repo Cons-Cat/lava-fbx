@@ -30,13 +30,6 @@ target_link_libraries(lava-extras.fbx PUBLIC
         lava::app
         lava-extras::core
 )
-set(OFBX_SRC ../ext/OpenFBX/src)
-target_sources(lava-extras.fbx PUBLIC
-  ${OFBX_SRC}/miniz.h
-  ${OFBX_SRC}/miniz.c
-  ${OFBX_SRC}/ofbx.h
-  ${OFBX_SRC}/ofbx.cpp
-)
 
 set_property(TARGET lava-extras.fbx PROPERTY EXPORT_NAME fbx)
 add_library(lava-extras::fbx ALIAS lava-extras.fbx)
