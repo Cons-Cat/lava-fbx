@@ -27,8 +27,7 @@ add_library(lava-extras.fbx STATIC
         )
 
 target_link_libraries(lava-extras.fbx PUBLIC
-        lava::resource
-        lava::block
+        lava::app
         lava-extras::core
         )
 
