@@ -1,0 +1,7 @@
+[submodule "ext/liblava"]
+	path = ext/liblava
+	url = https://github.com/liblava/liblava.git
+	branch = master
+[submodule "ext/OpenFBX"]
+	path = ext/OpenFBX
+	url = https://github.com/nem0/OpenFBX
