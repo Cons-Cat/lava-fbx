@@ -2,6 +2,15 @@
 
 namespace lava::extras {
 
+auto load_fbx_scene(lava::name filename) -> ofbx::IScene* {
+  string target_file = filename;
+  lava::cdata const data = lava::file_data(filename);
+  // TODO: Modernize C-style casts.
+  ofbx::IScene* scene = ofbx::load((ofbx::u8*)data.ptr, data.size,
+                                   (ofbx::u64)ofbx::LoadFlags::TRIANGULATE);
+  return scene;
+}
+
 // TODO: Template the type of vertices here.
 auto load_fbx_model_by_index(lava::device_ptr device, lava::name filename,
                              ofbx::IScene* scene, int index) -> fbx_data {
