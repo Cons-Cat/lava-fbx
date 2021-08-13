@@ -30,40 +30,36 @@ auto load_fbx_scene(lava::name filename) -> ofbx::IScene* {
 }
 
 // TODO(conscat): Template the type of vertices here.
-auto load_fbx_model_by_index(ofbx::IScene* scene, int index) -> fbx_data {
+auto load_fbx_model(ofbx::IScene* scene) -> fbx_data {
   lava::extras::fbx_data fbx_data;
   lava::mesh_data mesh_data;
-
-  const ofbx::Mesh* mesh = scene->getMesh(index);
-  const ofbx::Geometry* geom = mesh->getGeometry();
-  const int fbx_vertex_count = geom->getVertexCount();
-  const ofbx::Vec3* fbx_vertices = geom->getVertices();
-  for (int i = 0; i < fbx_vertex_count; ++i) {
-    ofbx::Vec3 v = fbx_vertices[i];
-    lava::vertex lava_vertex{.position = lava::v3(v.x, v.y, v.z)};
-    mesh_data.vertices.push_back(lava_vertex);
-  }
-  const int* indices = geom->getFaceIndices();
-  int index_count = geom->getIndexCount();
-  for (int i = 0; i < index_count; i++) {
-    // Negative indices represent the end of a polygon. They must be inverted
-    // and decremented.
-    int index = (indices[i] < 0) ? (-indices[i] - 1) : indices[i];
-    mesh_data.indices.push_back(index);  // cast to `lava::index`
+  int indices_offset = 0;
+  int mesh_count = scene->getMeshCount();
+  for (int i = 0; i < mesh_count; i++) {
+    const ofbx::Mesh* mesh = scene->getMesh(i);
+    const ofbx::Geometry* geom = mesh->getGeometry();
+    const int vertex_count = geom->getVertexCount();
+    const ofbx::Vec3* fbx_vertices = geom->getVertices();
+    for (int i = 0; i < vertex_count; ++i) {
+      ofbx::Vec3 v = fbx_vertices[i];
+      lava::vertex lava_vertex{.position = lava::v3(v.x, v.y, v.z)};
+      mesh_data.vertices.push_back(lava_vertex);
+    }
+    const int* indices = geom->getFaceIndices();
+    int index_count = geom->getIndexCount();
+    for (int j = 0; j < index_count; j++) {
+      // Negative indices represent the end of a polygon. They must be inverted
+      // and decremented.
+      int index = (indices[j] < 0) ? (-indices[j] - 1) : indices[j];
+      mesh_data.indices.push_back(index +
+                                  indices_offset);  // cast to `lava::index`
+    }
+    indices_offset += vertex_count;
   }
   // TODO(conscat): Template arguments (and concepts) for loading colors,
   // normals, and UVs.
   fbx_data.mesh_data = mesh_data;
   return fbx_data;
-}
-
-auto load_fbx_models(ofbx::IScene* scene) -> std::vector<fbx_data> {
-  std::vector<fbx_data> fbx;
-  fbx.reserve(scene->getMeshCount());
-  for (int i = 0; i < scene->getMeshCount(); i++) {
-    fbx.push_back(load_fbx_model_by_index(scene, i));
-  }
-  return fbx;
 }
 
 }  // namespace lava::extras

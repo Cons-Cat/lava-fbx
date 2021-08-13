@@ -11,7 +11,6 @@ typedef struct {
 
 auto load_fbx_scene(lava::name filename) -> ofbx::IScene*;
 
-auto load_fbx_model_by_index(ofbx::IScene* scene,
-                             int index) -> fbx_data;
+auto load_fbx_model(ofbx::IScene* scene) -> fbx_data;
 
 }  // namespace lava::extras
