@@ -7,19 +7,20 @@ auto load_fbx_scene(lava::name filename) -> ofbx::IScene* {
   // lava::cdata const file_data = lava::file_data(filename);
   // TODO(conscat): Modernize C-style casts.
   FILE* fp = fopen(filename, "rb");
-
-  if (!fp) return nullptr;
+  if (fp == nullptr) {
+    return nullptr;
+  }
 
   fseek(fp, 0, SEEK_END);
-  long file_size = ftell(fp);
+  lava::int64 file_size = ftell(fp);
   fseek(fp, 0, SEEK_SET);
-  auto* content = new ofbx::u8[file_size];
+  unsigned char* content = new ofbx::u8[file_size];
   fread(content, 1, file_size, fp);
 
   // ofbx::u8 const* fbx_data = reinterpret_cast<ofbx::u8
   // const*>(file_data.ptr);
-  auto* scene = ofbx::load((ofbx::u8*)content, file_size,
-                           (ofbx::u64)ofbx::LoadFlags::TRIANGULATE);
+  auto* scene = ofbx::load(static_cast<ofbx::u8*>(content), file_size,
+                           static_cast<ofbx::u64>(ofbx::LoadFlags::TRIANGULATE));
   // auto* scene = ofbx::load((ofbx::u8*)fbx_data, file_data.size,
   //                          (ofbx::u64)ofbx::LoadFlags::TRIANGULATE);
 
