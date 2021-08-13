@@ -49,7 +49,7 @@ auto load_fbx_model_by_index(ofbx::IScene* scene, int index) -> fbx_data {
     // Negative indices represent the end of a polygon. They must be inverted
     // and decremented.
     int index = (indices[i] < 0) ? (-indices[i] - 1) : indices[i];
-    mesh_data.indices.push_back(index); // cast to `lava::index`
+    mesh_data.indices.push_back(index);  // cast to `lava::index`
   }
   // TODO(conscat): Template arguments (and concepts) for loading colors,
   // normals, and UVs.
@@ -59,7 +59,8 @@ auto load_fbx_model_by_index(ofbx::IScene* scene, int index) -> fbx_data {
 
 auto load_fbx_models(ofbx::IScene* scene) -> std::vector<fbx_data> {
   std::vector<fbx_data> fbx;
-  for (size_t i = 0; i < scene->getMeshCount(); i++) {
+  fbx.reserve(scene->getMeshCount());
+  for (int i = 0; i < scene->getMeshCount(); i++) {
     fbx.push_back(load_fbx_model_by_index(scene, i));
   }
   return fbx;
