@@ -1,13 +1,14 @@
 #pragma once
-#include <liblava/lava.hpp>
+#include <liblava/file.hpp>
+#include <liblava/resource.hpp>
 
 #include "../../../ext/OpenFBX/src/ofbx.h"
 
 namespace lava::extras {
 
-typedef struct {
+struct fbx_data {
   lava::mesh_data mesh_data;
-} fbx_data;
+};
 
 auto load_fbx_scene(lava::name filename) -> ofbx::IScene*;
 

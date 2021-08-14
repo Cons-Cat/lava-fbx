@@ -9,7 +9,6 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp "")
 add_library(
   lava-extras.core STATIC
   ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp
-  ${LIBLAVA_EXTRAS_DIR}/lava-extras.hpp
   ${LIBLAVA_EXTRAS_DIR}/fbx.hpp
 )
 
@@ -30,12 +29,15 @@ add_library(
   ${OFBX_SRC}/miniz.c
   ${OFBX_SRC}/ofbx.h
   ${OFBX_SRC}/ofbx.cpp
+  ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_glm.hpp
+  ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_glm.cpp
   ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_loader.hpp
   ${LIBLAVA_EXTRAS_DIR}/fbx/fbx_loader.cpp
 )
 
 target_link_libraries(
   lava-extras.fbx PUBLIC
+  # TODO: Only link the lava modules that are used.
   lava::app
   lava-extras::core
 )
